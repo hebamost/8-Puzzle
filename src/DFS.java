@@ -7,34 +7,28 @@ import java.io.IOException;
 
 
 
-public class DFS {
+
+public class DFS extends ForAlgorithms {
 
 
     public static Stack<Node> frontier;
-   // HashSet<Integer> frontierSet;
-    static HashSet<Node> explorerSet;
+    // HashSet<Integer> frontierSet;
+    // static HashSet<Node> explorerSet;
     static HashMap<Node, Node> parentMap;
-   // static Integer Depth = 0;
+    // static Integer Depth = 0;
     //static Integer NodesExpanded = 0;
     static Node currentNode;
     //static int goalState= 12345678;
-    static Node goalNode=new Node(123345678);
-   // static Node initialState=new Node(123345678);
+    //static Node goalNode=new Node(123345678);
+    // static Node initialState=new Node(123345678);
 
-   /* Algorithm(){
-        int goalState= 12345678;
-        goalNode=new Node(goalState);
-        explored=new HashSet<>();
-    }*/
-    /*public DFS(){
+    public DFS() {
         super();
-        frontier=new Stack<>();
-    }*/
+        frontier = new Stack<>();
+    }
 
-
-
-
-    public static boolean dfs(Node initialState) {
+    @Override
+    public boolean search(Node initialState, Result result) {
         System.out.println(" i started");
         frontier.push(initialState);          //m4 byd5l hnaaaa leeeeeeeeeh
         System.out.println("s 1");
@@ -42,9 +36,9 @@ public class DFS {
         // frontierSet.add(initialState.getState());
         while (!frontier.isEmpty()) {
             currentNode = frontier.pop();   //curr node
-            explorerSet.add(currentNode);
-           // currentNode.state == 12345678
-            if (goalTest(currentNode)) {
+            explorerSet.add(currentNode.getState());
+            // currentNode.state == 12345678
+            if (ReachedGoal(currentNode)) {
                 System.out.println(" solve");
                 return true;  //goal state is reached
             }
@@ -65,26 +59,5 @@ public class DFS {
 
     }
 
-    public static boolean goalTest(Node state){
-        return state.equals(goalNode);
-    }
-    Node getGoalNode(){
-        return goalNode;
-    }
-
-
-    public static class main{
-        public static void main(String[] args){
-            /*Scanner in = new Scanner(System.in);
-            System.out.print("Enter initial state space or comma separated: ");
-            String s = in.nextLine();
-            s = s.replaceAll(",", "");
-            s = s.replaceAll(" ", "");*/
-           // Node node = new Node(Integer.parseInt(s));
-            Node node=new Node(120345678);
-            dfs(node);
-
-
-        }
-    }
 }
+
