@@ -79,6 +79,53 @@ public class Node {
     }
 
 
+    //////////////////////////////////////////////
+    ///////////////////////////////////////////
+   /* public List<Node> children(){
+        int n = 3;
+        int [] curr = new int[3*3];
+        int zeroIndex = -1;
+        LinkedList<Node>  neighbors = new LinkedList<Node>();
+        String st = Integer.toString(state);
+        if(st.length() != 9) {
+            st = '0' + st;
+        }
+        for (int i = 0; i < st.length(); i++){
+            curr[i] = st.charAt(i) - '0';
+            if(curr[i] == 0)
+                zeroIndex = i;
+        }
+
+        if(zeroIndex/n != 0) {		//Can Go UP
+            Node neighbor = new Node(state);
+            neighbor.swap(zeroIndex, zeroIndex-n);
+            neighbors.add(neighbor);
+        }
+
+        if(zeroIndex/n != 2) {		//Can Go DOWN
+            Node neighbor = new Node(state);
+            neighbor.swap(zeroIndex, zeroIndex+n);
+            neighbors.add(neighbor);
+        }
+
+        if(zeroIndex%n != 0) {		//Can Go Left
+            Node neighbor = new Node(state);
+            neighbor.swap(zeroIndex, zeroIndex-1);
+            neighbors.add(neighbor);
+        }
+
+        if(zeroIndex%n != 2) {		//Can Go RIGHT
+            Node neighbor = new Node(state);
+            neighbor.swap(zeroIndex, zeroIndex+1);
+            neighbors.add(neighbor);
+        }
+
+        return neighbors;
+    }*/
+    /////////////////////////////////////////////////// /
+    ///////////////////////////////////////////
+
+
 
 
     private void swap (int i, int j) {

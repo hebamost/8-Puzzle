@@ -25,13 +25,15 @@ public class DFS extends ForAlgorithms {
     public DFS() {
         super();
         frontier = new Stack<>();
+        parentMap= new HashMap<>();
+        System.out.println(" i started HERE");
     }
 
-    @Override
-    public boolean search(Node initialState, Result result) {
-        System.out.println(" i started");
+
+    public boolean search(Node initialState, Results_inf result) {
+       // System.out.println(" i started");
         frontier.push(initialState);          //m4 byd5l hnaaaa leeeeeeeeeh
-        System.out.println("s 1");
+        //System.out.println("s 1");
         parentMap.put(initialState, initialState);
         // frontierSet.add(initialState.getState());
         while (!frontier.isEmpty()) {
@@ -39,11 +41,14 @@ public class DFS extends ForAlgorithms {
             explorerSet.add(currentNode.getState());
             // currentNode.state == 12345678
             if (ReachedGoal(currentNode)) {
+                getGoalNode().setParent(currentNode.getParent());
+                result.setNofNodesExpanded(explorerSet.size());
                 System.out.println(" solve");
                 return true;  //goal state is reached
             }
             for (Node neighbor : initialState.children()) {
                 if (!explorerSet.contains(neighbor.getState()) && !frontier.contains(neighbor.getState())) {
+                    neighbor.setParent(currentNode);
                     frontier.add(neighbor);
                     parentMap.put(neighbor, currentNode);
 
@@ -55,6 +60,7 @@ public class DFS extends ForAlgorithms {
 
         }
         System.out.println("no solve");
+        result.setNofNodesExpanded(explorerSet.size());
         return false;
 
     }
