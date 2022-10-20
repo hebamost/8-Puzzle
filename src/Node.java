@@ -1,36 +1,129 @@
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Node {
-    int state = 0;
-    double totalCost ;
-    int cost = 0 ;
-    Node parent ;
-    static final int dimension = 3;
-    public void setCost (int cost){
-        this.cost = cost ;
+    // State represented as sequence of digits
+    int state;
+    Node parent;
+    double totalcost;
+    int cost=0;
+    Node(){
+        state=0;
+        cost=0;
     }
-    public void setState (int state){
-        this.state = state ;
+
+
+    public void setCost(int cost) {
+        this.cost=cost;
     }
-    public void setTotalCost (double totalCost){
-        this.totalCost = totalCost ;
+    public int getCost() {
+        return cost;
     }
-    public void setParent (Node parent){
-        this.parent = parent ;
+
+    public void setState(int state) {
+        this.state=state;
     }
-    public int getCost (){
-        return this.cost ;
+    public int getState() {
+        return state;
     }
-    public int getState (){
-        return this.state ;
+
+    public Node getParent(){
+        return parent;
     }
-    public double getTotalCost (){
-        return this.totalCost ;
+    public void setParent(Node parent){
+        this.parent=parent;
     }
-    public Node getParent (){
-        return this.parent ;
+
+    public double getTotalcost() {
+        return totalcost;
     }
+    public void setTotalcost(double total) {
+        this.totalcost=total;
+    }
+
+
+
+    public List<Node> children(boolean dfs){
+        int n = 3;
+        int [] curr = new int[3*3];
+        int zeroIndex = -1;
+        LinkedList<Node>  neighbors = new LinkedList<Node>();
+        String st = Integer.toString(state);
+        if(st.length() != 9) {
+            st = '0' + st;
+        }
+        for (int i = 0; i < st.length(); i++){
+            curr[i] = st.charAt(i) - '0';
+            if(curr[i] == 0)
+                zeroIndex = i;
+        }
+
+        if(zeroIndex>2) {		//Can Go UP
+            Node neighbor = new Node();
+            neighbor.setState(state);
+            neighbor.swapIndexes(zeroIndex, zeroIndex-n);
+            neighbors.add(neighbor);
+        }
+
+        if(zeroIndex< 6) {		//Can Go DOWN
+            Node neighbor = new Node();
+            neighbor.setState(state);
+            neighbor.swapIndexes(zeroIndex, zeroIndex+n);
+            neighbors.add(neighbor);
+        }
+
+
+        if(zeroIndex%n != 2) {		//Can Go RIGHT
+            Node neighbor = new Node();
+            neighbor.setState(state);
+            neighbor.swapIndexes(zeroIndex, zeroIndex+1);
+            neighbors.add(neighbor);
+        }
+
+        if(zeroIndex%n != 0) {		//Can Go Left
+            Node neighbor = new Node();
+            neighbor.setState(state);
+            neighbor.swapIndexes(zeroIndex, zeroIndex-1);
+            neighbors.add(neighbor);
+        }
+
+        if(dfs){
+            Collections.reverse(neighbors);
+        }
+
+        return neighbors;
+    }
+
+
+    @Override
+    public int hashCode(){
+        return Integer.hashCode(state);
+    }
+     @Override
+    public boolean equals(Object object){
+        if(!(object instanceof Node))
+            return false;
+        return this.state ==  ((Node) object).state;
+    }
+    @Override
+    public String toString() {
+        String st = Integer.toString(state);
+        if(st.length() != 9) {
+            st = '0' + st;
+        }
+        String s = "";
+        for(int i=0;i<3;i++) {
+            for(int j=3*i;j<3*i+3;j++) {
+                s  += st.charAt(j) + " ";
+                if(j%3 != 2)
+                    s+= "| ";
+                else
+                    s+= "\n";
+            }
+        }
+        s += "---------\n";
+        return s;
+    }
+
 
     public void swapIndexes (int first , int second){
         int[] stateArray = new int[9] ;
@@ -51,44 +144,8 @@ public class Node {
         }
         this.state = result ;
     }
-    public List<Node> children (){
-        LinkedList<Node> children = new LinkedList<>() ;
-        int[] stateArray = new int[9] ;
-        String stateString = String.valueOf(getState()) ;
-        if (stateString.length() != 9){
-            stateString = '0' + stateString ;
-        }
-        int indexOfZero = -1 ;
-        for (int i=0 ; i<stateString.length() ; i++){
-            stateArray[i] = stateString.charAt(i) - '0' ;
-            if (stateArray[i] == 0){
-                indexOfZero = i ;
-            }
-        }
-        if (indexOfZero > 2){     //can go up
-            Node child = new Node() ;
-            child.setState(this.state);
-            child.swapIndexes(indexOfZero , indexOfZero - dimension);
-            children.add(child);
-        }
-        if (indexOfZero < 6){     //can go down
-            Node child = new Node() ;
-            child.setState(this.state);
-            child.swapIndexes(indexOfZero , indexOfZero + dimension);
-            children.add(child);
-        }
-        if (indexOfZero % dimension == 0 || indexOfZero % dimension == 1){     //can go right
-            Node child = new Node() ;
-            child.setState(this.state);
-            child.swapIndexes(indexOfZero , indexOfZero + 1);
-            children.add(child);
-        }
-        if (indexOfZero % dimension == 1 || indexOfZero % dimension == 2){     //can go left
-            Node child = new Node() ;
-            child.setState(this.state);
-            child.swapIndexes(indexOfZero , indexOfZero - 1);
-            children.add(child);
-        }
-        return children;
-    }
+
+
+
+
 }
